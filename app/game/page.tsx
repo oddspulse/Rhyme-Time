@@ -38,7 +38,7 @@ export default function GamePage() {
 
     const nextBeat = () => {
       if (beatCount >= 16) {
-        router.push(\`/results?score=\${score}&bpm=\${bpm}&accuracy=85\`)
+        router.push(`/results?score=${score}&bpm=${bpm}&accuracy=85`)
         return
       }
 
@@ -78,7 +78,7 @@ export default function GamePage() {
     setTimeout(() => setFeedback(null), 500)
 
     if (lives <= 1 && judgement === 'MISS ✗') {
-      router.push(\`/results?score=\${score}&bpm=\${bpm}&accuracy=65\`)
+      router.push(`/results?score=${score}&bpm=${bpm}&accuracy=65`)
     }
   }
 
@@ -122,7 +122,7 @@ export default function GamePage() {
         <div className="w-full bg-gray-700 rounded-full h-2">
           <div
             className="bg-primary h-2 rounded-full transition-all"
-            style={{ width: \`\${(beatCount / 16) * 100}%\` }}
+            style={{ width: `${(beatCount / 16) * 100}%` }}
           />
         </div>
       </div>
@@ -142,11 +142,11 @@ export default function GamePage() {
           <motion.button
             key={index}
             onClick={() => handleCardTap(item.word, index)}
-            className={\`aspect-square rounded-2xl p-4 flex flex-col items-center justify-center transition-all \${
+            className={`aspect-square rounded-2xl p-4 flex flex-col items-center justify-center transition-all ${
               index === activeIndex
                 ? 'bg-primary text-black scale-105 shadow-2xl shadow-primary/50'
                 : 'bg-gray-800 text-white'
-            }\`}
+            }`}
             animate={index === activeIndex ? { scale: [1, 1.06, 1] } : {}}
             transition={{ duration: 0.3 }}
           >
