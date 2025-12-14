@@ -13,10 +13,6 @@ export interface RhymePack {
   items: RhymeItem[];
 }
 
-export interface PacksData {
-  packs: RhymePack[];
-}
-
 export type JudgementType = 'perfect' | 'good' | 'miss';
 
 export interface BeatResult {
@@ -50,22 +46,6 @@ export interface GameConfig {
   goodWindow: number; // ms
 }
 
-export interface CalibrationData {
-  offset: number; // ms
-  isCalibrated: boolean;
-}
-
-export type InputMode = 'voice' | 'tap';
-
-export interface Settings {
-  inputMode: InputMode;
-  selectedPackId: string;
-  calibration: CalibrationData;
-  musicVolume: number;
-  sfxVolume: number;
-  hapticsEnabled: boolean;
-}
-
 export interface HighScore {
   score: number;
   bpm: number;
@@ -74,9 +54,4 @@ export interface HighScore {
   packId: string;
 }
 
-export interface DailyChallenge {
-  date: string;
-  seed: number;
-  packId: string;
-  highScore?: HighScore;
-}
+export type GameEventType = 'beat' | 'round-complete' | 'game-over' | 'game-complete' | 'judgement';

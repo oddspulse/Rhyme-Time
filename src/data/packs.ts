@@ -1,0 +1,68 @@
+import { RhymePack } from '../types';
+
+export const RHYME_PACKS: RhymePack[] = [
+  {
+    id: 'oon-pack',
+    name: 'Oon Squad',
+    difficulty: 'easy',
+    bpmStart: 90,
+    items: [
+      { word: 'moon', imageAsset: '🌙', phoneticHint: 'moon', rhymeGroupId: '-oon' },
+      { word: 'spoon', imageAsset: '🥄', phoneticHint: 'spoon', rhymeGroupId: '-oon' },
+      { word: 'balloon', imageAsset: '🎈', phoneticHint: 'balloon', rhymeGroupId: '-oon' },
+      { word: 'raccoon', imageAsset: '🦝', phoneticHint: 'raccoon', rhymeGroupId: '-oon' },
+      { word: 'cartoon', imageAsset: '📺', phoneticHint: 'cartoon', rhymeGroupId: '-oon' },
+      { word: 'soon', imageAsset: '⏰', phoneticHint: 'soon', rhymeGroupId: '-oon' },
+      { word: 'noon', imageAsset: '☀️', phoneticHint: 'noon', rhymeGroupId: '-oon' },
+      { word: 'tune', imageAsset: '🎵', phoneticHint: 'tune', rhymeGroupId: '-oon' },
+    ],
+  },
+  {
+    id: 'ight-pack',
+    name: 'Light Brigade',
+    difficulty: 'easy',
+    bpmStart: 90,
+    items: [
+      { word: 'light', imageAsset: '💡', phoneticHint: 'light', rhymeGroupId: '-ight' },
+      { word: 'kite', imageAsset: '🪁', phoneticHint: 'kite', rhymeGroupId: '-ight' },
+      { word: 'night', imageAsset: '🌃', phoneticHint: 'night', rhymeGroupId: '-ight' },
+      { word: 'fight', imageAsset: '🥊', phoneticHint: 'fight', rhymeGroupId: '-ight' },
+      { word: 'bright', imageAsset: '✨', phoneticHint: 'bright', rhymeGroupId: '-ight' },
+      { word: 'sight', imageAsset: '👁️', phoneticHint: 'sight', rhymeGroupId: '-ight' },
+      { word: 'bite', imageAsset: '🦷', phoneticHint: 'bite', rhymeGroupId: '-ight' },
+      { word: 'write', imageAsset: '✍️', phoneticHint: 'write', rhymeGroupId: '-ight' },
+    ],
+  },
+  {
+    id: 'ake-pack',
+    name: 'Cake Crew',
+    difficulty: 'medium',
+    bpmStart: 95,
+    items: [
+      { word: 'cake', imageAsset: '🎂', phoneticHint: 'cake', rhymeGroupId: '-ake' },
+      { word: 'snake', imageAsset: '🐍', phoneticHint: 'snake', rhymeGroupId: '-ake' },
+      { word: 'lake', imageAsset: '🏞️', phoneticHint: 'lake', rhymeGroupId: '-ake' },
+      { word: 'rake', imageAsset: '🍂', phoneticHint: 'rake', rhymeGroupId: '-ake' },
+      { word: 'shake', imageAsset: '🥤', phoneticHint: 'shake', rhymeGroupId: '-ake' },
+      { word: 'break', imageAsset: '💔', phoneticHint: 'break', rhymeGroupId: '-ake' },
+      { word: 'wake', imageAsset: '⏰', phoneticHint: 'wake', rhymeGroupId: '-ake' },
+      { word: 'make', imageAsset: '🔨', phoneticHint: 'make', rhymeGroupId: '-ake' },
+    ],
+  },
+  {
+    id: 'ear-pack',
+    name: 'Hear Here',
+    difficulty: 'medium',
+    bpmStart: 100,
+    items: [
+      { word: 'ear', imageAsset: '👂', phoneticHint: 'ear', rhymeGroupId: '-ear' },
+      { word: 'gear', imageAsset: '⚙️', phoneticHint: 'gear', rhymeGroupId: '-ear' },
+      { word: 'near', imageAsset: '📍', phoneticHint: 'near', rhymeGroupId: '-ear' },
+      { word: 'deer', imageAsset: '🦌', phoneticHint: 'deer', rhymeGroupId: '-ear' },
+      { word: 'fear', imageAsset: '😱', phoneticHint: 'fear', rhymeGroupId: '-ear' },
+      { word: 'clear', imageAsset: '🔍', phoneticHint: 'clear', rhymeGroupId: '-ear' },
+      { word: 'year', imageAsset: '📅', phoneticHint: 'year', rhymeGroupId: '-ear' },
+      { word: 'cheer', imageAsset: '🎉', phoneticHint: 'cheer', rhymeGroupId: '-ear' },
+    ],
+  },
+];
