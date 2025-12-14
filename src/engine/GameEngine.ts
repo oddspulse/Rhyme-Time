@@ -25,6 +25,8 @@ export class GameEngine {
   private currentTargetIndex = 0;
   private pack: RhymePack;
   private calibrationOffset: number;
+  private noAudioMode = false;
+  private startTime = 0;
 
   constructor(pack: RhymePack, calibrationOffset = 0) {
     this.pack = pack;
@@ -63,20 +65,33 @@ export class GameEngine {
   /**
    * Start the game
    */
-  async start(audioFile: any): Promise<void> {
-    // Load audio
-    const { sound } = await Audio.Sound.createAsync(
-      audioFile,
-      { shouldPlay: false, isLooping: true, volume: 0.7 },
-      this.onPlaybackStatusUpdate.bind(this)
-    );
-    this.sound = sound;
+  async start(audioFile?: any): Promise<void> {
+    // Try to load audio if provided
+    if (audioFile) {
+      try {
+        const { sound } = await Audio.Sound.createAsync(
+          audioFile,
+          { shouldPlay: false, isLooping: true, volume: 0.7 },
+          this.onPlaybackStatusUpdate.bind(this)
+        );
+        this.sound = sound;
+        await sound.playAsync();
+        this.noAudioMode = false;
+      } catch (error) {
+        console.warn('Audio failed to load, running in no-audio mode:', error);
+        this.noAudioMode = true;
+        this.startTime = Date.now();
+      }
+    } else {
+      // No audio file provided - use timer mode
+      console.log('Running in no-audio mode (timer-based beats)');
+      this.noAudioMode = true;
+      this.startTime = Date.now();
+    }
 
     // Setup first round
     this.setupRound();
 
-    // Start playback
-    await sound.playAsync();
     this.state.isPlaying = true;
 
     // Start game loop
@@ -114,17 +129,27 @@ export class GameEngine {
         return;
       }
 
-      const status = await this.sound?.getStatusAsync();
-      if (status && status.isLoaded && this.scheduler) {
-        const audioPositionMs = status.positionMillis;
+      let currentTimeMs = 0;
 
+      if (this.noAudioMode) {
+        // Timer-based mode (no audio)
+        currentTimeMs = Date.now() - this.startTime;
+      } else {
+        // Audio-based mode
+        const status = await this.sound?.getStatusAsync();
+        if (status && status.isLoaded) {
+          currentTimeMs = status.positionMillis;
+        }
+      }
+
+      if (this.scheduler) {
         // Initialize scheduler on first beat
         if (this.state.beatNumber === 0 && !this.scheduler.getCurrentBeatIndex()) {
-          this.scheduler.initialize(audioPositionMs, this.calibrationOffset);
+          this.scheduler.initialize(currentTimeMs, this.calibrationOffset);
         }
 
         // Check for next beat
-        const nextBeat = this.scheduler.getNextBeat(audioPositionMs);
+        const nextBeat = this.scheduler.getNextBeat(currentTimeMs);
         if (nextBeat) {
           this.onBeat(nextBeat.beatIndex);
         }
@@ -164,10 +189,16 @@ export class GameEngine {
   async handleInput(word: string): Promise<void> {
     if (!this.scheduler || !this.state.isPlaying) return;
 
-    const status = await this.sound?.getStatusAsync();
-    if (!status || !status.isLoaded) return;
+    let currentTimeMs = 0;
 
-    const audioPositionMs = status.positionMillis;
+    if (this.noAudioMode) {
+      currentTimeMs = Date.now() - this.startTime;
+    } else {
+      const status = await this.sound?.getStatusAsync();
+      if (!status || !status.isLoaded) return;
+      currentTimeMs = status.positionMillis;
+    }
+
     const currentBeatIndex = this.state.beatNumber - 1;
 
     // Normalize word
@@ -181,7 +212,7 @@ export class GameEngine {
 
     // Judge timing
     const judgement = isCorrectWord
-      ? this.scheduler.judgeInput(audioPositionMs, currentBeatIndex)
+      ? this.scheduler.judgeInput(currentTimeMs, currentBeatIndex)
       : 'miss';
 
     // Calculate score
@@ -201,7 +232,7 @@ export class GameEngine {
     const result: BeatResult = {
       beatIndex: currentBeatIndex,
       judgement,
-      timestamp: audioPositionMs,
+      timestamp: currentTimeMs,
       word: normalizedWord,
     };
     this.state.results.push(result);

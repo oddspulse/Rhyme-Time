@@ -89,8 +89,14 @@ export default function GameScreen() {
         await handleGameEnd(data, true);
       });
 
-      // Start the game with audio file
-      await engine.start(require('../assets/audio/beat-loop-1.mp3'));
+      // Start the game (audio optional - will use timer if not available)
+      try {
+        await engine.start(require('../assets/audio/beat-loop-1.mp3'));
+      } catch (error) {
+        // Audio file not found - run without audio (timer-based)
+        console.log('No audio file found, running in silent mode');
+        await engine.start();
+      }
 
       // Initialize UI state
       setGameState(engine.getState());

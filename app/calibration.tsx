@@ -28,12 +28,16 @@ export default function CalibrationScreen() {
 
   const startCalibration = async () => {
     try {
-      // Load and play metronome sound
-      const { sound } = await Audio.Sound.createAsync(
-        require('../assets/audio/beat-loop-1.mp3'),
-        { shouldPlay: true, isLooping: true, volume: 0.5 }
-      );
-      soundRef.current = sound;
+      // Try to load and play metronome sound (optional)
+      try {
+        const { sound } = await Audio.Sound.createAsync(
+          require('../assets/audio/beat-loop-1.mp3'),
+          { shouldPlay: true, isLooping: true, volume: 0.5 }
+        );
+        soundRef.current = sound;
+      } catch (audioError) {
+        console.log('Running calibration without audio (haptics only)');
+      }
 
       // Reset state
       setIsCalibrating(true);
