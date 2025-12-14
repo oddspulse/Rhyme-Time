@@ -1,0 +1,15 @@
+⚠️ AUDIO FILE REQUIRED
+
+This is a placeholder file. You need to add a real MP3 audio file named:
+beat-loop-1.mp3
+
+See assets/audio/README.md for instructions on how to get audio files.
+
+Quick solution:
+1. Go to https://pixabay.com/music/
+2. Search "drum loop" or "metronome"
+3. Download a free MP3
+4. Rename it to "beat-loop-1.mp3"
+5. Replace this placeholder file
+
+The app will NOT work without a real audio file!
